@@ -10,9 +10,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Padding constants for dev speed.
-  static const double horizontalPadding = 40;
-  static const double verticalPadding = 25;
 
   // Power button switched.
   void powerSwitchChanged(bool value, int index) {
@@ -23,6 +20,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    final double horizontalPadding = screenHeight * 0.045; // 40
+    final double verticalPadding = screenHeight * 0.03; // 25
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -31,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             // Custom app bar.
             Padding(
-              padding: const EdgeInsets.symmetric(
+              padding: EdgeInsets.symmetric(
                 horizontal: horizontalPadding,
                 vertical: verticalPadding,
               ),
@@ -39,16 +41,21 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Menu icon.
-                  Image.asset(
-                    'lib/icons/menu.png',
-                    height: 45,
-                    color: Colors.grey[800],
+                  InkWell(
+                    onTap: () {},
+                    splashColor: Colors.white10,
+                    child: Image.asset(
+                      'lib/icons/menu.png',
+                      height: screenHeight * 0.04,
+                      color: Colors.grey[800],
+                    ),
                   ),
                   // Account icon.
-                  Icon(
-                    Icons.person,
-                    size: 45,
+                  IconButton(
+                    icon: const Icon(Icons.person),
+                    iconSize: screenHeight * 0.04,
                     color: Colors.grey[800],
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -56,34 +63,32 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 25),
             // Welcome home part.
             Padding(
-              padding: const EdgeInsets.symmetric(
+              padding: EdgeInsets.symmetric(
                 horizontal: horizontalPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "Welcome Home,",
                     style: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromRGBO(97, 97, 97, 1)
+                      fontSize: MediaQuery.of(context).textScaleFactor * 20,
+                      color: const Color.fromRGBO(97, 97, 97, 1)
                     ),
                   ),
                   Text(
                     "DENIZ GOKAY",
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      fontSize: 72,
+                      fontSize: MediaQuery.of(context).textScaleFactor * 50,
                     ),
                   ),
                 ],
               ),
             ),
-
             const SizedBox(height: 25),
-            
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-              child: Divider(
+              child: const Divider(
                 color: Color.fromRGBO(189, 189, 189, 1),
                 thickness: 1,
               ),
@@ -91,7 +96,7 @@ class _HomePageState extends State<HomePage> {
             
             const SizedBox(height: 25),
             // Smart devices + grid.
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: horizontalPadding
               ),
@@ -99,8 +104,8 @@ class _HomePageState extends State<HomePage> {
                 "Smart Devices",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                  color: Color.fromRGBO(66, 66, 66, 1),
+                  fontSize: MediaQuery.of(context).textScaleFactor * 24,
+                  color: const Color.fromRGBO(66, 66, 66, 1),
                 ),
               ),
             ),
@@ -108,7 +113,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: GridView.builder(
                 itemCount: SmartDevices.mySmartDevices().length,
-                padding: const EdgeInsets.all(25.0),
+                padding: EdgeInsets.all(screenHeight * 0.03),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1 / 1.3,
