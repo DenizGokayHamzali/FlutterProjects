@@ -1,4 +1,5 @@
-# ToDo App
+# MyToDos
 
-A flutter ToDo project.
+A flutter ToDo app project.
 
+It is based on Pradip Debnath's video.
