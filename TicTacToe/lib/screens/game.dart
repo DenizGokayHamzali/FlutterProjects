@@ -1,8 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../constants/colors.dart';
 
 class GameScreen extends StatefulWidget {
@@ -29,16 +26,16 @@ class _GameScreenState extends State<GameScreen> {
 
   int attempts = 0;
 
-  static var customFontWhite = GoogleFonts.coiny(
-    textStyle: const TextStyle(
+  static var customFontWhite = const TextStyle(
       color: Colors.white,
       letterSpacing: 3,
       fontSize: 28,
-    ),
-  );
+      fontFamily: 'Chalkboard',
+      fontWeight: FontWeight.bold,
+    );
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
         if(seconds > 0) {
           seconds--;
@@ -110,15 +107,15 @@ class _GameScreenState extends State<GameScreen> {
                     child: Center(
                       child: Text(
                           displayXO[index],
-                          style: GoogleFonts.coiny(
-                              textStyle: TextStyle(
+                          style: TextStyle(
                                   fontSize: 64,
                                   color: MainColor.primaryColor,
+                                  fontFamily: 'Chalkboard',
+                                  fontWeight: FontWeight.bold
                               )),
                       ),
                     ),
-                  ),
-                );
+                  );
               },
               ),
             ),
@@ -277,22 +274,26 @@ class _GameScreenState extends State<GameScreen> {
       displayXO = ['', '', '', '', '', '','', '', ''];
       resultDeclaration = '';
       matchedIndexes = [];
+      winnerFound = false;
     });
     filledBoxes = 0;
   }
 
   Widget _buildTimer() {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     final isRunning = timer == null ? false : timer!.isActive;
     return isRunning
         ? SizedBox(
-          width: 100,
-          height: 100,
+          width: screenWidth * 0.24,
+          height: screenHeight * 0.115,
           child: Stack(
             fit: StackFit.expand,
             children: [
               CircularProgressIndicator(
                 value: 1 - seconds / maxSeconds,
-                valueColor: AlwaysStoppedAnimation(Colors.white),
+                valueColor: const AlwaysStoppedAnimation(Colors.white),
                 strokeWidth: 8,
                 backgroundColor: MainColor.accentColor,
               ),
