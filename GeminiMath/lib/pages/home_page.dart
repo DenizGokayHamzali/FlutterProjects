@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ class _MyHomePageState extends State<StatefulWidget> {
   XFile? _image;
   String _responseBody = "";
   bool _isSending = false;
+  String customPrompt = "";
+  final TextEditingController _controller = TextEditingController();
 
   Future<void> _getImageFromCamera() async {
     final ImagePicker picker = ImagePicker();
@@ -55,56 +58,58 @@ class _MyHomePageState extends State<StatefulWidget> {
       _isSending = true;
     });
     String base64Image = base64Encode(File(imagefile.path).readAsBytesSync());
-    String apiKey = "AIzaSyBZOTEki_cqkcMTZBHnkt9RWlPshdt8HVc";
+    String apiKey = dotenv.env['API_KEY']!;
     String requestBody = json.encode(
-      {
-        "contents": [
-          {
-            "parts": [
-              {
-                "text": "Solve this maths function and write step-by-step details and the reason behind that step\n"
-              },
-              {
-                "inlineData": {
-                  "mimeType": "image/jpeg",
-                  "data": base64Image
+        {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": customPrompt == "" ? "Solve this maths function and write step-by-step details and the reason behind that step\n" : customPrompt
+                },
+                {
+                  "inlineData": {
+                    "mimeType": "image/jpeg",
+                    "data": base64Image
+                  }
                 }
-              }
-            ]
-          }
-        ],
-        "generationConfig": {
-          "temperature": 0.4,
-          "topK": 32,
-          "topP": 1,
-          "maxOutputTokens": 4096,
-          "stopSequences": []
-        },
-        "safetySettings": [
-          {
-            "category": "HARM_CATEGORY_HARASSMENT",
-            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+              ]
+            }
+          ],
+          "generationConfig": {
+            "temperature": 0.4,
+            "topK": 32,
+            "topP": 1,
+            "maxOutputTokens": 4096,
+            "stopSequences": []
           },
-          {
-            "category": "HARM_CATEGORY_HATE_SPEECH",
-            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-          },
-        ],
-      }
+          "safetySettings": [
+            {
+              "category": "HARM_CATEGORY_HARASSMENT",
+              "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+              "category": "HARM_CATEGORY_HATE_SPEECH",
+              "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+              "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+              "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+              "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+              "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
+          ],
+        }
     );
     http.Response response = await http.post(
-      Uri.parse("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$apiKey"),
-      headers: {"Content-Type": "application/json"},
-      body: requestBody
+        Uri.parse("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$apiKey"),
+        headers: {"Content-Type": "application/json"},
+        body: requestBody
     );
+    print("Sent: $customPrompt");
+
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonBody = json.decode(response.body);
       setState(() {
@@ -122,33 +127,37 @@ class _MyHomePageState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("GeminiMath"),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                _image == null ? const Text("No Image is selected!") : Image.file(File(_image!.path)),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(_responseBody, style: const TextStyle(fontSize: 16)),
-                )
-              ],
+        appBar: AppBar(
+          title: const Text("GeminiMath"),
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  _image == null
+                      ? const Center(child: Text("No Image is selected!"))
+                      : Image.file(File(_image!.path)),
+                  const SizedBox(height: 10,),
+                  TextField(controller: _controller, onChanged: (value) => customPrompt=value,),
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(_responseBody, style: const TextStyle(fontSize: 16)),
+                  )
+                ],
+              ),
             ),
-          ),
-          if(_isSending) const Center(child: CircularProgressIndicator(color: Colors.red),),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _image == null ? _openCamera() : sendImage(_image);
-        },
-        tooltip: _image == null ? "Pick image" : "Send image",
-        child: Icon(_image == null ? Icons.camera_alt : Icons.send),
-      )
+            if(_isSending) const Center(child: CircularProgressIndicator(color: Colors.red),),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _image == null ? _openCamera() : sendImage(_image);
+          },
+          tooltip: _image == null ? "Pick image" : "Send image",
+          child: Icon(_image == null ? Icons.camera_alt : Icons.send),
+        )
     );
   }
 }
