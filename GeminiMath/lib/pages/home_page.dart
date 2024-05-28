@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:gemini_math/auth/keys.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -58,7 +57,7 @@ class _MyHomePageState extends State<StatefulWidget> {
       _isSending = true;
     });
     String base64Image = base64Encode(File(imagefile.path).readAsBytesSync());
-    String apiKey = dotenv.env['API_KEY']!;
+    String apiKey = geminiApiKey;
     String requestBody = json.encode(
         {
           "contents": [
