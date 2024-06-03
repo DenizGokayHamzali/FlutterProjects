@@ -4,3 +4,7 @@ This GitHub repository serves as a showcase for various Flutter projects I've co
 "To provide context and acknowledge the inspiration behind each project, detailed information can be found within the individual project's README file."
 
 # All Projects
+- ### SmartHomeUI
+<div style="text-align: center;">
+  <img src="./Assets/SmartHomeUI.gif" width="250px"/>
+</div>
