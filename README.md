@@ -8,3 +8,10 @@ This GitHub repository serves as a showcase for various Flutter projects I've co
 <div style="text-align: center;">
   <img src="./Assets/SmartHomeUI.gif" width="250px"/>
 </div>
+
+#
+
+- ### CoffeeUI
+<div style="text-align: center;">
+  <img src="./Assets/CoffeeUI.gif" width="250px"/>
+</div>
