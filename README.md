@@ -22,3 +22,10 @@ This GitHub repository serves as a showcase for various Flutter projects I've co
 <div style="text-align": center;">
   <img src="./Assets/BMICalculator.gif" width="250px"/>
 </div>
+
+#
+
+- ### CalculatorUI
+<div style="text-align": center;">
+  <img src="./Assets/CalculatorUI.gif" width="250px"/>
+</div>
