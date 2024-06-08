@@ -18,6 +18,13 @@ This GitHub repository serves as a showcase for various Flutter projects I've co
 
 #
 
+- ### MyToDos
+<div style="text-align": center;">
+  <img src="./Assets/MyToDos.gif" width="250px"/>
+</div>
+
+#
+
 - ### BMICalculator
 <div style="text-align": center;">
   <img src="./Assets/BMICalculator.gif" width="250px"/>
