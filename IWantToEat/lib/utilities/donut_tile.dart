@@ -7,7 +7,7 @@ class DonutTile extends StatelessWidget {
   final String imageName;
 
   static const double borderRadius = 12.0;
-  static const double padding = 12.0;
+  static const double padding = 5.0;
 
   const DonutTile({
     Key? key,

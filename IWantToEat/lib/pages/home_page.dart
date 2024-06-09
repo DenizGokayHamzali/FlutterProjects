@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
           children: [
           // I want to eat part.
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36.0, vertical: 18.0),
+            padding: EdgeInsets.symmetric(horizontal: 36.0, vertical: 9.0),
             child: Row(
               children: [
                 Text(
