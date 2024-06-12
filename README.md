@@ -32,6 +32,13 @@ This GitHub repository serves as a showcase for various Flutter projects I've co
 
 #
 
+- ### BurgerWebUI
+<div style="text-align": center;">
+  <img src="./Assets/BurgerWebUI.gif" width="900px"/>
+</div>
+
+#
+
 - ### BMICalculator
 <div style="text-align": center;">
   <img src="./Assets/BMICalculator.gif" width="250px"/>
