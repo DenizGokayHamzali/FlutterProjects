@@ -11,6 +11,13 @@ This GitHub repository serves as a showcase for various Flutter projects I've co
 
 #
 
+- ### TicTacToe
+<div style="text-align: center;">
+  <img src="./Assets/TicTacToe.gif" width="250px"/>
+</div>
+
+#
+
 - ### CoffeeUI
 <div style="text-align: center;">
   <img src="./Assets/CoffeeUI.gif" width="250px"/>
