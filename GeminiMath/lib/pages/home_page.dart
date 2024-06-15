@@ -135,10 +135,18 @@ class _MyHomePageState extends State<StatefulWidget> {
               child: Column(
                 children: <Widget>[
                   _image == null
-                      ? const Center(child: Text("No Image is selected!"))
+                      ? const Center(
+                          child: Padding(
+                              padding: EdgeInsets.only(top: 10.0),
+                              child: Text("No Image is selected!"),
+                          ),
+                      )
                       : Image.file(File(_image!.path)),
-                  const SizedBox(height: 10,),
-                  TextField(controller: _controller, onChanged: (value) => customPrompt=value,),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+                    child: TextField(controller: _controller, onChanged: (value) => customPrompt=value,),
+                  ),
                   const SizedBox(height: 20),
                   Container(
                     padding: const EdgeInsets.all(8.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gemini_math/pages/home_page.dart';
+import 'package:gemini_math/constants/colors.dart';
 
 void main() async {
   runApp(const GeminiApp());
@@ -14,8 +15,8 @@ class GeminiApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'GeminiMath',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: MainColor.primaryColor),
+        useMaterial3: false,
       ),
       home: const MyHomePage(),
     );
